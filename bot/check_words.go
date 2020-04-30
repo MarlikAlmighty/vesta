@@ -9,6 +9,7 @@ import (
 // checkWords find in text a key words
 func checkWords(text string) bool {
 
+	// Cyrillic and Latin in words
 	var keyWords = "вест lada lаda ladа vest vеst bест beст becт"
 
 	text = s.ToLower(text)
