@@ -40,6 +40,27 @@ func loop(ctx context.Context, bot *tgbotapi.BotAPI) {
 			return
 		case update := <-updates:
 
+			if update.Message.NewChatMembers != nil {
+				// delete message - User joined the chat
+				if api, err := bot.DeleteMessage(tgbotapi.DeleteMessageConfig{
+					ChatID:    update.Message.Chat.ID,
+					MessageID: update.Message.MessageID,
+				}); err != nil {
+					log.Printf("Err delete message: %v\n", api.Result)
+				}
+
+			}
+
+			if update.Message.LeftChatMember != nil {
+				// delete message - User left the chat
+				if api, err := bot.DeleteMessage(tgbotapi.DeleteMessageConfig{
+					ChatID:    update.Message.Chat.ID,
+					MessageID: update.Message.MessageID,
+				}); err != nil {
+					log.Printf("Err delete message: %v\n", api.Result)
+				}
+			}
+
 			var f = false
 			if update.Message != nil {
 
